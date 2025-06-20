@@ -1,13 +1,22 @@
 import express, { Application, Request,Response } from "express";
 import cors from "cors"
+import app from "./app"
+
+import cookieParser from "cookie-parser"
+
+
 import {logger} from "./libs/logger"
 import {env} from "./libs/env"
 import {db} from "./libs/db"
 
 
 
-const app:Application = express();
+
+
 const PORT:Number = +(env.PORT ?? 4001)
+
+
+app.use(cookieParser());
 
 app.use(cors())
 app.use(express.json())
