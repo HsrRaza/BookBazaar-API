@@ -115,5 +115,36 @@ export const  updateBook = asyncHandler(async(req:Request, res:Response)=>{
 
 })
 export const  deleteBook = asyncHandler(async(req:Request, res:Response)=>{
+    try {
+         const  {bookId} = req.params;
+         if(!bookId){
+            throw new ApiError(400, "Book id is required")
+         }
 
+
+         const checkBook = await db.book.findUnique({
+            where:{
+                id:bookId
+            }
+         });
+         if(!checkBook){
+            throw new ApiError(404, "Book Not found ")
+         }
+
+         const bookDelete = await db.book.delete({
+            where:{
+                id:bookId
+            }
+         })
+
+         if(!bookDelete){
+            throw new ApiError(404, "Unable to delete ")
+         }
+
+         return res.status(200).json(new ApiResponse(200, bookDelete,"book deleted successfully" ) )
+        
+     } catch (error) {
+        return new ApiError(500, "Internal Error")
+        
+     }
 })
