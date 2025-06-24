@@ -54,7 +54,7 @@ model Book {
 }
 
 model Bookreview {
-  id     String @id
+  id     String @id @unique @default(uuid())
   review String
   userId String
   bookId String

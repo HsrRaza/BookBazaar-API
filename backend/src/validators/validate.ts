@@ -27,4 +27,9 @@ export const addBookSchema = z.object({
     
 })
 
+export const addReviewSchema = z.object({
+    review:z.string().min(1),
+    rating:z.number().int().positive()
+})
+
 
