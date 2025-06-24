@@ -18,3 +18,13 @@ export const loginUserSchema = z.object({
     password:passwordSchema
 })
 
+export const addBookSchema = z.object({
+    name:z.string().min(1),
+    author:z.string().min(1),
+    title:z.string().min(1),
+    price:z.number().int().positive(),
+    description:z.string().optional(),
+    
+})
+
+

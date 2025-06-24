@@ -1,12 +1,12 @@
-export class ApiResponse {
+export class ApiResponse<T= object> {
     statusCode: number
-    data: Object
+    data: T;
     message: string
     success: boolean
 
-    constructor(statusCode: number = 200,  data?: Object,message: string = "Success",) {
+    constructor(statusCode: number = 200,  data?: T, message: string = "Success",) {
         this.statusCode = statusCode
-        this.data = data || {}
+        this.data = data || ({} as T)
         this.message = message
         this.success = statusCode < 400
     }

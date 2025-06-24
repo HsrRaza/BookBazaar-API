@@ -32,11 +32,11 @@ model User {
   createdAt                DateTime @default(now())
   updatedAt                DateTime @updatedAt
 
-  books      Books[]
+  books      Book[]
   bookreview Bookreview[]
 }
 
-model Books {
+model Book {
   id          String   @id @unique @default(uuid())
   name        String
   author      String
@@ -63,7 +63,7 @@ model Bookreview {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  book Books @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

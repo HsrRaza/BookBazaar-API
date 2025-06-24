@@ -9,16 +9,16 @@ const envSchema = z.object({
 
 
     //  send Email
-    EMAIL_HOST:z.string().trim(),
-    EMAIL_PORT:z.coerce.number(),
+    // EMAIL_HOST:z.string().trim(),
+    // EMAIL_PORT:z.coerce.number(),
 
-    EMAIL_USER:z.string(),
-    EMAIL_PASS:z.number(),
-    BASE_URL:z.string().url(),
-    SENDER_EMAIL:z.string().url()
+    // EMAIL_USER:z.string(),
+    // EMAIL_PASS:z.number(),
+    // BASE_URL:z.string().url(),
+    // SENDER_EMAIL:z.string().url(),
 
 
-    // JWT_SECRET:z.string().min(1, "JWT_SECRET is required ")
+    JWT_SECRET:z.string().min(1, "JWT_SECRET is required ")
 })
 
 function createEnv(env:NodeJS.ProcessEnv){
