@@ -3,8 +3,7 @@ import { db } from "../libs/db";
 import { ApiError } from "../utils/apiError";
 import { ApiResponse } from "../utils/apiResponse";
 import { asyncHandler } from "../utils/asyncHandler";
-import { create } from "domain";
-// import { prismaClient } from "@prisma/client";
+
 
 
 export const createOrder = asyncHandler(async (req: Request, res: Response) => {
@@ -126,5 +125,34 @@ export const getOrdersById = asyncHandler(async (req: Request, res: Response) =>
 })
 
 export const cancelOrder = asyncHandler(async(req:Request, res:Response)=>{
+
+    // 1. need to wrap it inside transaction
+    //  2. check if the users is cancelling it's own order
     
+
+    
+    
+     
+     const order = await db.order.update({
+        where: {
+            id: req.params.id
+        },
+        data:{
+            status:"CANCELLED",
+        }
+    })
+
+    await db.orderEvent.create({
+        data:{
+            orderId:order.id,
+            status:"CANCELLED"
+        }
+    })
+
+    if (!order) {
+        throw new ApiError(400, " Orders unable to cancel")
+    }
+
+    return res.status(200).json(new ApiResponse(200, order, " Orders cancelled successfully"))
+
 })
