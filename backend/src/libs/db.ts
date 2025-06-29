@@ -1,10 +1,33 @@
 
 import { PrismaClient } from '@prisma/client';
 
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
 
-export const db = globalForPrisma.prisma ?? new PrismaClient();
+const prismaClient = new PrismaClient().$extends({
+  result: {
+    address: {
+      formattedAddress: {
+        needs: {
+          lineOne: true,
+          lineTwo: true,
+          city: true,
+          country: true,
+          pincode: true,
+        },
+        compute: (addr) => {
+          return `${addr.lineOne}, ${addr.lineTwo ?? ''}, ${addr.city}, ${addr.country}, ${addr.pincode}`;
+        },
+      },
+    },
+  },
+});
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
+
+declare global {
+  
+  var prisma: typeof prismaClient | undefined;
+}
+
+
+export const db = globalThis.prisma ?? prismaClient;
+
+if (process.env.NODE_ENV !== 'production') globalThis.prisma = db;

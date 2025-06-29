@@ -37,8 +37,12 @@ model User {
   verificationTokenExpiray DateTime
   passwordResetToken       String?
   passwordResetExpiry      String?
-  createdAt                DateTime @default(now())
-  updatedAt                DateTime @updatedAt
+
+  defaultShippingAddress Int?
+  defaultBillingAddress  Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   bookreview Bookreview[]
 
@@ -54,14 +58,13 @@ model Address {
   lineTwo String?
   city    String
   country String
+  pincode Int
   userId  String
 
   user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  order Order[]
 }
 
 model Book {
@@ -115,22 +118,21 @@ model Order {
   id        String  @id @unique @default(uuid())
   userId    String
   netAmount Decimal
-  addressId Int
+  address   String
 
   user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Address   Address  @relation(fields: [addressId], references: [id])
 
-  orderProduct OrderProduct[]
+  products OrderProduct[]
 
   events OrderEvent[]
 }
 
 model OrderProduct {
-  id        String @id @unique @default(uuid())
-  orderId   String
+  id       String @id @unique @default(uuid())
+  orderId  String
   quantity Int
 
   bookId String
