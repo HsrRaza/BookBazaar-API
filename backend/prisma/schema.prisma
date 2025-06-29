@@ -18,6 +18,14 @@ enum UserRole {
   USER
 }
 
+enum OrderEventStatus {
+  PENDING
+  ACCEPTED
+  OUT_FOR_DELIVARY
+  DELIVERED
+  CANCELLED
+}
+
 model User {
   id                       String   @id @default(uuid())
   name                     String
@@ -32,11 +40,28 @@ model User {
   createdAt                DateTime @default(now())
   updatedAt                DateTime @updatedAt
 
-  books      Book[]
   bookreview Bookreview[]
 
-  order    Order[]
-  CartItem CartItem[]
+  orders   Order[]
+  cartItem CartItem[]
+
+  address Address[]
+}
+
+model Address {
+  id      Int     @id @default(autoincrement())
+  lineOne String
+  lineTwo String?
+  city    String
+  country String
+  userId  String
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order Order[]
 }
 
 model Book {
@@ -44,17 +69,16 @@ model Book {
   name        String
   author      String
   title       String
-  userId      String
   description String?
   price       Int
   publish     DateTime @default(now())
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   bookreview Bookreview[]
   cartItem   CartItem[]
+
+  orders OrderProduct[]
 }
 
 model Bookreview {
@@ -70,6 +94,8 @@ model Bookreview {
   book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, bookId])
 }
 
 model CartItem {
@@ -80,19 +106,51 @@ model CartItem {
 
   user User @relation(fields: [userId], references: [id])
 
-  Book Book @relation(fields: [bookId], references: [id])
+  Book      Book     @relation(fields: [bookId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Order {
-  id        String   @id @unique @default(uuid())
-  bookId    String
+  id        String  @id @unique @default(uuid())
   userId    String
-  address   String
-  city      String
-  pincode   Int
-  state     String
+  netAmount Decimal
+  addressId Int
+
+  user User @relation(fields: [userId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Address   Address  @relation(fields: [addressId], references: [id])
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderProduct OrderProduct[]
+
+  events OrderEvent[]
+}
+
+model OrderProduct {
+  id        String @id @unique @default(uuid())
+  orderId   String
+  quantity Int
+
+  bookId String
+
+  book Book @relation(fields: [bookId], references: [id])
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderEvent {
+  id      String @id @unique @default(uuid())
+  orderId String
+
+  status OrderEventStatus @default(PENDING)
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

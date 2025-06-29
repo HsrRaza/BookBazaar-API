@@ -10,7 +10,8 @@ import { addBookSchema } from "../validators/validate";
 export const  addBook = asyncHandler(async(req:Request, res:Response)=>{
     
     // const {name, author, title, price}= data;
-    const user = req.user!.id;
+    const user = req.user?.id
+    
     if(!user){
         throw new ApiError(401, "Unauthorized Access")
     }
@@ -28,7 +29,7 @@ export const  addBook = asyncHandler(async(req:Request, res:Response)=>{
                   title,
                   price:Number(price),
                   description:description || undefined,
-                  userId:req.user!.id
+                  
 
                   
 
@@ -45,6 +46,14 @@ export const  addBook = asyncHandler(async(req:Request, res:Response)=>{
      }
 })
 export const  getAllBooks = asyncHandler(async(req:Request, res:Response)=>{
+
+    const allBooks = await db.book.findMany();
+
+    if(!allBooks){
+        throw new ApiError(400, "Unable to fetched ALl books")
+    }
+
+    return res.status(200).json(new ApiResponse(200, allBooks,"All Books are fetched Successfully " ))
 
 })
 export const  getBookById = asyncHandler(async(req:Request, res:Response)=>{
@@ -96,7 +105,7 @@ export const  updateBook = asyncHandler(async(req:Request, res:Response)=>{
                   title,
                   price:Number(price),
                   description:description || undefined,
-                  userId:req.user!.id
+                 
 
             }
 
