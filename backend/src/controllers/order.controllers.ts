@@ -89,7 +89,7 @@ export const createOrder = asyncHandler(async (req: Request, res: Response) => {
 
 
 })
-export const listOders = asyncHandler(async (req: Request, res: Response) => {
+export const listOrders = asyncHandler(async (req: Request, res: Response) => {
     const order = await db.order.findMany({
         where: {
             userId: req.user.id

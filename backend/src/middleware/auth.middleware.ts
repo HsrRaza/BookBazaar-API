@@ -5,7 +5,7 @@ import { db } from "../libs/db";
 import jwt  from "jsonwebtoken";
 
 
-import { CookieOptions } from "express";
+
 import { asyncHandler } from "../utils/asyncHandler";
 import { ApiError } from "../utils/apiError";
 import { env } from "../libs/env";

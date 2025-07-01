@@ -16,3 +16,4 @@ const router: Router = Router()
 router.route("/register").post(registerUser)
 router.route("/register").post(loginUser)
 router.route("/me").get(getUser)
+
