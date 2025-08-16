@@ -2,9 +2,7 @@
 
 An advanced RESTful API for an online bookstore where users can browse, purchase, and review books. Designed using best practices in modern backend development — with authentication, middleware, data validation, and payment integration.
 
-![BookBazaar Banner](https://your-image-link.com/banner.png)
 
-🔗 **Live API**: [https://bookbazaar-api.vercel.app](https://bookbazaar-api.vercel.app)
 
 ---
 
