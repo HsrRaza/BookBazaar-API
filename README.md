@@ -1,131 +1,140 @@
-# BookBazaar-API
-📚 Online Bookstore API
-A full-featured backend API for an online bookstore where users can browse, purchase, and review books. The system is designed to simulate a lightweight e-commerce backend with real-world design patterns, authentication, middleware, and structured data handling using Prisma and PostgreSQL.
+ # 📚 BookBazaar-API
 
-🎯 End Goal
-✅ JWT-based user authentication & authorization
+An advanced RESTful API for an online bookstore where users can browse, purchase, and review books. Designed using best practices in modern backend development — with authentication, middleware, data validation, and payment integration.
 
-✅ Full CRUD for books, reviews, and orders
+![BookBazaar Banner](https://your-image-link.com/banner.png)
 
-✅ API key generation to secure book and order access
+🔗 **Live API**: [https://bookbazaar-api.vercel.app](https://bookbazaar-api.vercel.app)
 
-✅ Middleware for authentication, API key, and admin access
+---
 
-✅ Postman collection with all endpoints
+## 🎯 Features
 
-💳 Bonus: Razorpay payment integration & cart functionality
+- ✅ JWT-based authentication & authorization
+- ✅ Full CRUD for books, reviews, orders
+- ✅ API key generation for protected access
+- ✅ Admin-only routes with middleware protection
+- ✅ Postman collection included for testing
+- ✅ Bonus: Razorpay mock payment & cart system
 
-📊 Database Tables
-users
+---
 
-api_keys
+## 🗂️ Database Schema
 
-books
+| Table         | Description                          |
+|---------------|--------------------------------------|
+| `users`       | User info with roles and auth data   |
+| `api_keys`    | Unique keys for route protection     |
+| `books`       | Catalog of books                     |
+| `reviews`     | User reviews for books               |
+| `orders`      | Purchase orders                      |
+| `cart_items`  | User cart details (bonus)            |
+| `payments`    | Razorpay mock payments (bonus)       |
 
-reviews
+---
 
-orders
+## 🧾 API Routes Overview
 
-cart_items (bonus enhancement)
+### 🔐 Auth & API Key
 
-payments (bonus for Razorpay mock integration)
+| Method | Endpoint         | Description                   |
+|--------|------------------|-------------------------------|
+| POST   | `/auth/register` | Register new user             |
+| POST   | `/auth/login`    | Log in & get JWT token        |
+| POST   | `/auth/api-key`  | Generate new API key          |
+| GET    | `/auth/me`       | Get current user info         |
 
-🧾 API Routes Overview
-🔐 Auth & API Key
-Method	Endpoint	Description
-POST	/auth/register	Register a new user
-POST	/auth/login	Log in user and get token
-POST	/auth/api-key	Generate new API key
-GET	/auth/me	Get logged-in user profile
+### 📚 Book Routes
 
-📚 Book Routes
-Method	Endpoint	Description
-POST	/books	Add a new book (Admin only)
-GET	/books	List all books (filters supported)
-GET	/books/:id	Get book details by ID
-PUT	/books/:id	Update book (Admin only)
-DELETE	/books/:id	Delete book (Admin only)
+| Method | Endpoint         | Description                   |
+|--------|------------------|-------------------------------|
+| POST   | `/books`         | Add new book (Admin only)     |
+| GET    | `/books`         | List all books (with filters) |
+| GET    | `/books/:id`     | Get book details by ID        |
+| PUT    | `/books/:id`     | Update book (Admin only)      |
+| DELETE | `/books/:id`     | Delete book (Admin only)      |
 
-✍️ Review Routes
-Method	Endpoint	Description
-POST	/books/:bookId/reviews	Add a review to a book
-GET	/books/:bookId/reviews	List reviews for a book
-DELETE	/reviews/:id	Delete review (owner only)
+### ✍️ Review Routes
 
-🛒 Order Routes
-Method	Endpoint	Description
-POST	/orders	Place an order
-GET	/orders	List user’s orders
-GET	/orders/:id	View order details
+| Method | Endpoint                        | Description                 |
+|--------|----------------------------------|-----------------------------|
+| POST   | `/books/:bookId/reviews`        | Add review to a book        |
+| GET    | `/books/:bookId/reviews`        | List reviews for a book     |
+| DELETE | `/reviews/:id`                  | Delete review (owner only)  |
 
-💳 Payment Mock API (Bonus)
-Method	Endpoint	Description
-POST	/payments/create	Create fake Razorpay payment ID
-POST	/payments/verify	Verify mock payment
+### 🛒 Order Routes
 
-🛡️ Security & Middleware
-🔐 JWT auth required for all protected routes
+| Method | Endpoint         | Description                 |
+|--------|------------------|-----------------------------|
+| POST   | `/orders`        | Place an order              |
+| GET    | `/orders`        | List user’s orders          |
+| GET    | `/orders/:id`    | View specific order details |
 
-🛂 Admin middleware for book creation and deletion
+         |
 
-🔑 API Key middleware for /books, /orders, and /payments routes
+---
 
-💡 Bonus Enhancements
-💳 Razorpay integration (mock/real) with callback simulation
+## 🛡️ Middleware & Security
 
-🔍 Book search, sort, filter (e.g., by title, author, genre)
+- 🔐 JWT auth for protected routes
+- 🛂 Admin-only access for book operations
+- 🔑 API Key middleware for sensitive endpoints
+- 🧪 Zod for request validation
 
-🛒 Cart system via cart_items table
+---
 
-🔁 Pagination for listing books/reviews/orders
+## 💡 Bonus Enhancements
 
-📧 Email confirmation after placing an order (Mailtrap or real)
+- 🔍 Book search, filter, sort
+- 🛒 Cart system
+- 🔁 Pagination for lists
+- 📧 Email confirmation (Mailtrap or SMTP)
 
-✅ Deliverables Checklist
- Auth + API Key (JWT, key generation)
+---
 
- Book CRUD with Admin checks
+## ✅ Deliverables Checklist
 
- Review & Order functionality
+- [x] Auth + API Key protection  
+- [x] Book CRUD with Admin access  
+- [x] Reviews & Orders support  
+- [x] Secure Middleware implementation  
+- [x] Database structure with Prisma  
+- [x] Docker support  
+- [x] Postman collection  
+- [x] Razorpay + Cart + Email (bonus)
 
- Middleware (JWT, API Key, Admin)
+---
 
- DB structure & Prisma relationships
+## 🚀 Tech Stack
 
- Clean, modular code structure
+- **Backend**: Node.js, Express, TypeScript  
+- **Database**: PostgreSQL + Prisma ORM  
+- **Security**: JWT, bcrypt  
+- **Validation**: Zod  
+- **Payment**: Razorpay (mock)  
+- **Email**: Mailtrap  
+- **DevOps**: Docker, Docker Compose
 
- Complete Postman collection
+---
 
- Bonus: Razorpay, cart, filters, pagination, email
+## 📦 Getting Started
 
-🚀 Tech Stack
-Node.js, Express, TypeScript
+```bash
+# 1. Clone the repo
+git clone https://github.com/your-username/BookBazaar-API.git
+cd BookBazaar-API
 
-Prisma ORM + PostgreSQL
-
-Zod for validation
-
-JWT, bcrypt for security
-
-Docker for containerization
-
-Razorpay for mock payment flows
-
-📦 Project Setup
-bash
-Copy
-Edit
-# Install dependencies
+# 2. Install dependencies
 npm install
 
-# Set up environment variables
+# 3. Setup environment variables
 cp .env.example .env
 
-# Run Postgres via Docker
+# 4. Run Postgres using Docker
 docker-compose up -d
 
-# Migrate database
+# 5. Migrate DB
 npx prisma migrate dev --name init
 
-# Start the server
+# 6. Start the dev server
 npm run dev
